@@ -1,0 +1,22 @@
+{
+  "name": "ts-exercicios-dio",
+  "version": "1.0.0",
+  "description": "Resolução dos exercícios disponibilizados no curso \"Introdução prática de TypeScript\" da DIO",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/br-adriel/ts-exercicios-dio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/br-adriel/ts-exercicios-dio/issues"
+  },
+  "homepage": "https://github.com/br-adriel/ts-exercicios-dio#readme",
+  "dependencies": {
+    "typescript": "^4.7.3"
+  }
+}
