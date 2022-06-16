@@ -26,6 +26,9 @@ const searchButton = document.getElementById(
 const searchContainer = document.getElementById(
   'search-container'
 ) as HTMLDivElement;
+const criarListaButton = document.getElementById(
+  'btn-criar-lista'
+) as HTMLButtonElement;
 
 loginButton.addEventListener('click', async () => {
   await criarRequestToken();
@@ -54,6 +57,13 @@ searchButton.addEventListener('click', async () => {
   }
   console.log(listaDeFilmes);
   searchContainer.appendChild(ul);
+});
+
+criarListaButton.addEventListener('click', async () => {
+  const nomeInput = document.getElementById('nome-lista') as HTMLInputElement;
+  const descInput = document.getElementById('desc-lista') as HTMLInputElement;
+
+  await criarLista(nomeInput.value, descInput.value);
 });
 
 function preencherSenha() {
@@ -210,15 +220,40 @@ async function pegarLista() {
   console.log(result);
 }
 
-/* <div style="display: flex;">
-  <div style="display: flex; width: 300px; height: 100px; justify-content: space-between; flex-direction: column;">
-      <input id="login" placeholder="Login" onchange="preencherLogin(event)">
-      <input id="senha" placeholder="Senha" type="password" onchange="preencherSenha(event)">
-      <input id="api-key" placeholder="Api Key" onchange="preencherApi()">
-      <button id="login-button" disabled>Login</button>
+/*
+<div style="display: flex">
+  <div
+    style="
+      display: flex;
+      width: 300px;
+      height: 100px;
+      justify-content: space-between;
+      flex-direction: column;
+    "
+  >
+    <input
+      id="login"
+      placeholder="Login"
+      onchange="preencherLogin(event)"
+    />
+    <input
+      id="senha"
+      placeholder="Senha"
+      type="password"
+      onchange="preencherSenha(event)"
+    />
+    <input id="api-key" placeholder="Api Key" onchange="preencherApi()" />
+    <button id="login-button" disabled>Login</button>
   </div>
   <div id="search-container" style="margin-left: 20px">
-      <input id="search" placeholder="Escreva...">
-      <button id="search-button">Pesquisar Filme</button>
+    <input id="search" placeholder="Escreva..." />
+    <button id="search-button">Pesquisar Filme</button>
   </div>
-</div>*/
+  <div id="listas"></div>
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <input type="text" id="nome-lista" minlength="1" placeholder="Nome" />
+    <input type="text" id="desc-lista" placeholder="Descrição" />
+    <button id="btn-criar-lista">Criar lista</button>
+  </div>
+</div>
+*/
