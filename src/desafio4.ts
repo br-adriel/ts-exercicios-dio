@@ -10,7 +10,7 @@
 // Atenção para o listener do botão login-button que devolve o sessionID do usuário
 // É necessário fazer um cadastro no https://www.themoviedb.org/ e seguir a documentação do site para entender como gera uma API key https://developers.themoviedb.org/3/getting-started/introduction
 
-let apiKey = '3f301be7381a03ad8d352314dcc3ec1d';
+let apiKey = '';
 let requestToken: string;
 let username: string;
 let password: string;
@@ -28,6 +28,9 @@ const searchContainer = document.getElementById(
 ) as HTMLDivElement;
 const criarListaButton = document.getElementById(
   'btn-criar-lista'
+) as HTMLButtonElement;
+const adcFilmeListaBtn = document.getElementById(
+  'btn-adc-filme'
 ) as HTMLButtonElement;
 
 loginButton.addEventListener('click', async () => {
@@ -50,8 +53,10 @@ searchButton.addEventListener('click', async () => {
   if (listaDeFilmes.results) {
     for (const item of listaDeFilmes.results) {
       let li = document.createElement('li');
-      if (item.original_title)
-        li.appendChild(document.createTextNode(item.original_title));
+      if (item.original_title && item.id)
+        li.appendChild(
+          document.createTextNode(`#${item.id} - ${item.original_title}`)
+        );
       ul.appendChild(li);
     }
   }
@@ -64,6 +69,20 @@ criarListaButton.addEventListener('click', async () => {
   const descInput = document.getElementById('desc-lista') as HTMLInputElement;
 
   await criarLista(nomeInput.value, descInput.value);
+});
+
+adcFilmeListaBtn.addEventListener('click', async () => {
+  const listaIdInput = document.getElementById(
+    'idListaInput'
+  ) as HTMLInputElement;
+  const filmeIdInput = document.getElementById(
+    'idListaFilme'
+  ) as HTMLInputElement;
+
+  await adicionarFilmeNaLista(
+    Number(filmeIdInput.value),
+    Number(listaIdInput.value)
+  );
 });
 
 function preencherSenha() {
@@ -106,6 +125,7 @@ class HttpClient {
     session_id?: string;
     results?: {
       original_title?: string;
+      id?: number;
     }[];
   }> {
     return new Promise((resolve: Function, reject: Function) => {
@@ -201,7 +221,7 @@ async function criarLista(nomeDaLista: string, descricao: string) {
   console.log(result);
 }
 
-async function adicionarFilmeNaLista(filmeId: string, listaId: string) {
+async function adicionarFilmeNaLista(filmeId: number, listaId: number) {
   let result = await HttpClient.get({
     url: `https://api.themoviedb.org/3/list/${listaId}/add_item?api_key=${apiKey}&session_id=${sessionId}`,
     method: 'POST',
@@ -254,6 +274,11 @@ async function pegarLista() {
     <input type="text" id="nome-lista" minlength="1" placeholder="Nome" />
     <input type="text" id="desc-lista" placeholder="Descrição" />
     <button id="btn-criar-lista">Criar lista</button>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <input type="text" id="idListaInput" minlength="1" placeholder="Código da lista" />
+    <input type="text" id="idFilmeInput" placeholder="Código do filme" />
+    <button id="btn-adc-filme">Adicionar na lista</button>
   </div>
 </div>
 */
